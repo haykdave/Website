@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hayk Davtyan | Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="loader" aria-live="polite">
+        <div class="loader-card">
+            <div class="loader-title">Loading</div>
+            <div class="battery" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="battery-levels">
+                    <span class="battery-cell"></span>
+                    <span class="battery-cell"></span>
+                    <span class="battery-cell"></span>
+                </div>
+                <div class="battery-tip"></div>
+            </div>
+            <div class="loader-percent">0%</div>
+        </div>
+    </div>
+
+    <header>
+        <h1>Hayk Davtyan</h1>
+        <p>MSc Engineering student in Information Technology</p>
+    </header>
+
+    <section id="about">
+    <div class="about-container">
+        <img src="../pictures/hayk.jpg" alt="Hayk Davtyan" class="about-photo" />
+        <div class="about-text">
+            <h2>About Me</h2>
+            <p>
+                I am a second-year MSc Engineering student in Information Technology 
+                at Uppsala University. I am passionate about applying technology to 
+                solve real-world problems and enjoy working on projects that challenge 
+                my skills. I have experience in programming, data structures, 
+                and software development, and I love exploring new technologies. 
+                Outside of studies, I enjoy staying active through workouts 
+                and mountain climbing, which keeps me focused and disciplined.
+            </p>
+        </div>
+    </div>
+</section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <ul>
+            <li>📌 Face Recognition Project</li>
+            <li>📌 Data Structures & Algorithms</li>
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contact me</h2>
+        <p>Feel free to reach out for questions, collaboration, internships, or project ideas.</p>
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/xykdyzrd" method="POST">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@email.com" required />
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="How can I help?" required></textarea>
+
+            <button type="submit">Send Message</button>
+            <p class="contact-success" role="status" aria-live="polite">
+                Thank you for reaching out. I’ll be in touch as soon as possible.
+            </p>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-contact">
+            <a class="footer-icon" href="https://www.linkedin.com/in/hayk-davtyan-42430b20b/" target="_blank" rel="noopener">
+                <img src="../pictures/linkedin.jpg" alt="LinkedIn" />
+            </a>
+            <a class="footer-icon" href="https://github.com/hayk" target="_blank" rel="noopener">
+                <img src="../pictures/github.jpg" alt="GitHub" />
+            </a>
+            <a class="footer-icon" href="mailto:hayk.davtyan@hotmail.com">
+                <img src="../pictures/mail.jpg" alt="Email" />
+            </a>
+            <span>Phone: +46 76-704 72 44</span>
+        </div>
+        <p>© 2026 Hayk Davtyan</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
