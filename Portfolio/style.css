@@ -339,3 +339,52 @@ footer {
         order: 0;
     }
 }
+
+/* CV Section */
+.cv-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+.cv-photo-link {
+    display: inline-flex;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(7, 16, 24, 0.18);
+    border: 3px solid rgba(230, 247, 255, 0.9);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.cv-photo-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(7, 16, 24, 0.22);
+}
+
+.cv-photo {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    object-position: center;
+    background: rgba(255, 255, 255, 0.85);
+    display: block;
+}
+
+.cv-text h2 {
+    margin-bottom: 0.75rem;
+}
+
+.cv-text p {
+    line-height: 1.6;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+    .cv-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
