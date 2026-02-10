@@ -22,13 +22,13 @@
         </div>
     </div>
     <header>
-        </nav>
-        <h1>Hayk Davtyan</h1>
-        <p>MSc Engineering student in Information Technology</p>
-                <nav class="site-header">
+        <nav class="site-header">
             <div class="site-links">
                 <a href="contact.html">Contact Me & CV</a>
             </div>
+        </nav>
+        <h1>Hayk Davtyan</h1>
+        <p>MSc Engineering student in Information Technology</p>
     </header>
 
     <div class="split-section">
@@ -36,7 +36,9 @@
             <div class="about-container">
                 <img src="../pictures/hayk.jpg" alt="Hayk Davtyan" class="about-photo" />
                 <div class="about-text">
-                    <h2>About Me</h2>
+                    <h2 class="easter-egg-trigger" tabindex="0" role="button" aria-label="About me easter egg">
+                        About Me
+                    </h2>
                     <p>
                         I am a second-year MSc Engineering student in Information Technology 
                         at Uppsala University. I have experience in programming, data structures, 
@@ -97,11 +99,13 @@
             <a class="project-card" href="https://github.com/haykdave/Face-recognition-Python-project" target="_blank" rel="noopener">
                 <img src="../pictures/face.jpg" alt="Face-recognition project preview" />
                 <span class="project-title">Face-recognition project</span>
+                <span class="project-description">Real-time face detection and recognition with OpenCV.</span>
             </a>
-            <div class="project-card placeholder">
+            <a class="project-card" href="https://github.com/haykdave/IThemsida" target="_blank" rel="noopener">
                 <img src="../pictures/proj2.jpg" alt="Under construction project preview" />
                 <span class="project-title">Under construction</span>
-            </div>
+                <span class="project-description">Building a website for my program where we collect old exams and related resources.</span>
+            </a>
             <div class="project-card placeholder"></div>
             <div class="project-card placeholder"></div>
         </div>
@@ -117,7 +121,8 @@
             <a class="footer-icon" href="mailto:hayk.davtyan@hotmail.com">
                 <img src="../pictures/mail.jpg" alt="Email" />
             </a>
-            <span>Phone: +46 76-704 72 44</span>
+            <span class="phone-text">Phone: +46 76-704 72 44</span>
+            <a class="phone-link" href="tel:+46767047244">Phone: +46 76-704 72 44</a>
         </div>
         <p>© 2026 Hayk Davtyan</p>
     </footer>
@@ -125,8 +130,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
