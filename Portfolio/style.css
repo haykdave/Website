@@ -189,7 +189,7 @@ section {
 
 /* Projects */
 .projects-wide {
-    max-width: 1200px;
+    max-width: 980px;
 }
 
 .project-grid {
@@ -556,33 +556,52 @@ footer {
     height: 14px;
     border-radius: 3px;
     opacity: 0.9;
-    transform: translate3d(var(--confetti-x, 0), -20px, 0) rotate(var(--confetti-rotate, 0deg));
+    transform: translate3d(var(--confetti-x, 0px), -20px, 0) rotate(var(--confetti-rotate, 0deg)) scale(var(--confetti-scale, 1));
     animation: confetti-fall 1400ms ease-out forwards;
 }
 
 .confetti-piece.is-upward {
-    transform: translate3d(var(--confetti-x, 0), 110vh, 0) rotate(var(--confetti-rotate, 0deg));
+    transform: translate3d(var(--confetti-x, 0px), 110vh, 0) rotate(var(--confetti-rotate, 0deg)) scale(var(--confetti-scale, 1));
     animation: confetti-rise 1400ms ease-out forwards;
+}
+
+.confetti-piece.depth-1 {
+    opacity: 0.95;
+    filter: blur(0px);
+}
+
+.confetti-piece.depth-2 {
+    opacity: 0.75;
+    filter: blur(0.6px);
+}
+
+.confetti-piece.depth-3 {
+    opacity: 0.55;
+    filter: blur(1.2px);
 }
 
 @keyframes confetti-fall {
     0% {
-        transform: translate3d(var(--confetti-x, 0), -20px, 0) rotate(var(--confetti-rotate, 0deg));
+        transform: translate3d(var(--confetti-x, 0px), -20px, 0) rotate(var(--confetti-rotate, 0deg)) scale(calc(var(--confetti-scale, 1) * 0.6));
         opacity: 1;
     }
     100% {
-        transform: translate3d(var(--confetti-x, 0), 110vh, 0) rotate(calc(var(--confetti-rotate, 0deg) + 120deg));
+        transform: translate3d(calc(var(--confetti-x, 0px) + var(--confetti-drift, 0px)), 110vh, 0)
+            rotate(calc(var(--confetti-rotate, 0deg) + 120deg))
+            scale(var(--confetti-scale, 1));
         opacity: 0;
     }
 }
 
 @keyframes confetti-rise {
     0% {
-        transform: translate3d(var(--confetti-x, 0), 110vh, 0) rotate(var(--confetti-rotate, 0deg));
+        transform: translate3d(var(--confetti-x, 0px), 110vh, 0) rotate(var(--confetti-rotate, 0deg)) scale(calc(var(--confetti-scale, 1) * 0.6));
         opacity: 1;
     }
     100% {
-        transform: translate3d(var(--confetti-x, 0), -20vh, 0) rotate(calc(var(--confetti-rotate, 0deg) + 140deg));
+        transform: translate3d(calc(var(--confetti-x, 0px) + var(--confetti-drift, 0px)), -20vh, 0)
+            rotate(calc(var(--confetti-rotate, 0deg) + 140deg))
+            scale(var(--confetti-scale, 1));
         opacity: 0;
     }
 }

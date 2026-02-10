@@ -114,38 +114,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let i = 0; i < totalPieces; i += 1) {
             const piece = document.createElement("span");
-            piece.className = "confetti-piece";
+            const depth = i % 3;
+            piece.className = `confetti-piece depth-${depth + 1}`;
             const x = Math.random() * 100;
             const rotation = Math.floor(Math.random() * 360);
             const delay = Math.random() * 220;
-            const size = 6 + Math.random() * 10;
+            const size = depth === 0 ? 10 + Math.random() * 8 : depth === 1 ? 7 + Math.random() * 6 : 5 + Math.random() * 4;
+            const duration = depth === 0 ? 1500 : depth === 1 ? 1700 : 1900;
+            const drift = (Math.random() - 0.5) * (depth === 0 ? 140 : depth === 1 ? 100 : 70);
+            const scale = depth === 0 ? 1 : depth === 1 ? 0.85 : 0.7;
 
             piece.style.left = `${x}%`;
             piece.style.background = colors[i % colors.length];
             piece.style.setProperty("--confetti-x", `${(Math.random() - 0.5) * 30}px`);
+            piece.style.setProperty("--confetti-drift", `${drift}px`);
+            piece.style.setProperty("--confetti-scale", scale);
             piece.style.setProperty("--confetti-rotate", `${rotation}deg`);
             piece.style.width = `${size}px`;
             piece.style.height = `${size * 1.6}px`;
             piece.style.animationDelay = `${delay}ms`;
+            piece.style.animationDuration = `${duration}ms`;
 
             container.appendChild(piece);
         }
 
         for (let i = 0; i < upwardPieces; i += 1) {
             const piece = document.createElement("span");
-            piece.className = "confetti-piece is-upward";
+            const depth = i % 3;
+            piece.className = `confetti-piece is-upward depth-${depth + 1}`;
             const x = Math.random() * 100;
             const rotation = Math.floor(Math.random() * 360);
             const delay = Math.random() * 220;
-            const size = 6 + Math.random() * 10;
+            const size = depth === 0 ? 10 + Math.random() * 8 : depth === 1 ? 7 + Math.random() * 6 : 5 + Math.random() * 4;
+            const duration = depth === 0 ? 1500 : depth === 1 ? 1700 : 1900;
+            const drift = (Math.random() - 0.5) * (depth === 0 ? 140 : depth === 1 ? 100 : 70);
+            const scale = depth === 0 ? 1 : depth === 1 ? 0.85 : 0.7;
 
             piece.style.left = `${x}%`;
             piece.style.background = colors[i % colors.length];
             piece.style.setProperty("--confetti-x", `${(Math.random() - 0.5) * 30}px`);
+            piece.style.setProperty("--confetti-drift", `${drift}px`);
+            piece.style.setProperty("--confetti-scale", scale);
             piece.style.setProperty("--confetti-rotate", `${rotation}deg`);
             piece.style.width = `${size}px`;
             piece.style.height = `${size * 1.6}px`;
             piece.style.animationDelay = `${delay}ms`;
+            piece.style.animationDuration = `${duration}ms`;
 
             container.appendChild(piece);
         }
