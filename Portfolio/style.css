@@ -4,6 +4,8 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     background:
         radial-gradient(900px 500px at 85% 20%, rgba(0, 196, 204, 0.25), transparent 60%),
         radial-gradient(700px 450px at 15% 80%, rgba(120, 255, 168, 0.22), transparent 65%),
@@ -129,7 +131,43 @@ body.is-loaded footer {
 
 header {
     text-align: center;
-    padding: 4rem 1rem 3rem;
+    padding: 2rem 1rem 1.25rem;
+    border-bottom: 1px solid rgba(11, 15, 18, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247, 251, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+/* Site header */
+.site-header {
+    max-width: 1200px;
+    margin: 0 auto 0.6rem;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.site-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.site-links a {
+    text-decoration: none;
+    color: #0b0f12;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 196, 204, 0.2);
+}
+
+.site-links a:hover {
+    text-decoration: underline;
 }
 
 section {
@@ -140,6 +178,73 @@ section {
     backdrop-filter: blur(12px);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Projects */
+.projects-wide {
+    max-width: 1200px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(0, 196, 204, 0.18);
+    box-shadow: 0 10px 22px rgba(7, 16, 24, 0.08);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    min-height: 140px;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(7, 16, 24, 0.14);
+}
+
+.project-card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.project-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.project-card.placeholder {
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px dashed rgba(0, 196, 204, 0.35);
+    box-shadow: none;
+}
+
+/* About + Skills split */
+.split-section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.split-section section {
+    margin: 0;
+}
+
+/* Make About section wider/shorter */
+#about {
+    padding: 2rem 2.5rem;
 }
 
 /* Contact */
@@ -176,6 +281,48 @@ section {
 .contact-form {
     display: grid;
     gap: 0.75rem;
+}
+
+.contact-split {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.contact-split section {
+    margin: 0;
+}
+
+.contact-card-box {
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(0, 196, 204, 0.18);
+    box-shadow: 0 10px 22px rgba(7, 16, 24, 0.08);
+}
+
+.cv-card {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(0, 196, 204, 0.18);
+    box-shadow: 0 10px 22px rgba(7, 16, 24, 0.08);
+    text-align: center;
+}
+
+.cv-card .cv-photo-link {
+    justify-self: center;
+}
+
+.cv-card .cv-photo {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
 }
 
 .contact-form label {
@@ -240,12 +387,59 @@ h2 {
     padding-bottom: 0.5rem;
 }
 
+/* Technical competence */
+.skill-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(0, 196, 204, 0.18);
+    box-shadow: 0 8px 18px rgba(7, 16, 24, 0.08);
+}
+
+.skill-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    color: #0b0f12;
+    background: linear-gradient(135deg, #00c4cc, #78ffa8);
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.skill-tag {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(11, 15, 18, 0.12);
+}
+
 footer {
     padding: 2rem 1rem 2.5rem;
     border-top: 1px solid rgba(11, 15, 18, 0.15);
     text-align: left;
     opacity: 0.8;
     font-size: 0.95rem;
+    margin-top: auto;
 }
 
 .footer-contact {
@@ -288,29 +482,23 @@ footer {
 /* About Me */
 .about-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
 }
 
 /* Bild med rundade hörn istället för cirkel */
 .about-photo {
-    width: 220px;
-    height: 220px;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
     object-fit: cover;
     object-position: 20% center; /* flyttar motivet lite åt vänster i bilden */
     border-radius: 16px; /* rundade hörn */
     border: 3px solid rgba(230, 247, 255, 0.9);
-    order: 2; /* placerar bilden till höger om texten */
-    margin-left: auto; /* trycker bilden till höger i boxen */
-    transform: translateX(0);
+    margin: 0 auto;
 }
 
 .about-text h2 {
@@ -327,16 +515,38 @@ footer {
 
 /* Responsiv för mobiler */
 @media (max-width: 768px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-split {
+        grid-template-columns: 1fr;
+    }
+
     .about-container {
         flex-direction: column;
         text-align: center;
     }
 
+    .project-grid {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(160px, 1fr);
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        scroll-snap-type: x mandatory;
+    }
+
+    .project-card {
+        scroll-snap-align: start;
+    }
+
     .about-photo {
-        width: 180px;
-        height: 180px;
-        margin-left: 0;
-        order: 0;
+        max-width: 100%;
+    }
+
+    .split-section {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -387,4 +597,3 @@ footer {
         text-align: center;
     }
 }
-

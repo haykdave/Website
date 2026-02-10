@@ -21,72 +21,92 @@
             <div class="loader-percent">0%</div>
         </div>
     </div>
-
     <header>
+        </nav>
         <h1>Hayk Davtyan</h1>
         <p>MSc Engineering student in Information Technology</p>
+                <nav class="site-header">
+            <div class="site-links">
+                <a href="contact.html">Contact Me & CV</a>
+            </div>
     </header>
 
-    <section id="about">
-    <div class="about-container">
-        <img src="../pictures/hayk.jpg" alt="Hayk Davtyan" class="about-photo" />
-        <div class="about-text">
-            <h2>About Me</h2>
-            <p>
-                I am a second-year MSc Engineering student in Information Technology 
-                at Uppsala University. I am passionate about applying technology to 
-                solve real-world problems and enjoy working on projects that challenge 
-                my skills. I have experience in programming, data structures, 
-                and software development, and I love exploring new technologies. 
-                Outside of studies, I enjoy staying active through workouts 
-                and mountain climbing, which keeps me focused and disciplined.
-            </p>
-        </div>
-    </div>
-</section>
-
-    <section id="projects">
-        <h2>Projects</h2>
-        <ul>
-            <li>📌 Face Recognition Project</li>
-            <li>📌 Data Structures & Algorithms</li>
-        </ul>
-    </section>
-
-        <section id="cv">
-        <div class="cv-container">
-            <a class="cv-photo-link" href="Hayk_DavtyanCV26.pdf" download>
-                <img src="../pictures/bildcv.jpg" alt="CV preview" class="cv-photo" />
-            </a>
-            <div class="cv-text">
-                <h2>My Cv</h2>
-                <p>
-                    Click the image to download my CV.
-                </p>
+    <div class="split-section">
+        <section id="about">
+            <div class="about-container">
+                <img src="../pictures/hayk.jpg" alt="Hayk Davtyan" class="about-photo" />
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>
+                        I am a second-year MSc Engineering student in Information Technology 
+                        at Uppsala University. I have experience in programming, data structures, 
+                        and software development, and I love exploring new technologies. 
+                        Outside of studies, I enjoy staying active through workouts 
+                        and mountain climbing.
+                    </p>
+                </div>
             </div>
+        </section>
+
+        <section id="technical-competence">
+            <h2>Technical Competence</h2>
+            <ul class="skill-list">
+                <li class="skill-item">
+                    <span class="skill-label">Programming</span>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">Mips Assembly</span>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-label">Web</span>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-label">Tools</span>
+                    <div class="skill-tags">
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Logisim</span>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-label">Core CS</span>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Data Structures</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">Imperative Programming</span>
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">Memory Hierarchy</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+        <section id="projects" class="projects-wide">
+        <h2>Projects</h2>
+        <div class="project-grid">
+            <a class="project-card" href="https://github.com/haykdave/Face-recognition-Python-project" target="_blank" rel="noopener">
+                <img src="../pictures/face.jpg" alt="Face-recognition project preview" />
+                <span class="project-title">Face-recognition project</span>
+            </a>
+            <div class="project-card placeholder">
+                <img src="../pictures/proj2.jpg" alt="Under construction project preview" />
+                <span class="project-title">Under construction</span>
+            </div>
+            <div class="project-card placeholder"></div>
+            <div class="project-card placeholder"></div>
         </div>
     </section>
-    <section id="contact">
-        <h2>Contact me</h2>
-        <p>Feel free to reach out for questions, collaboration, internships, or project ideas.</p>
-        <form class="contact-form" id="contact-form" action="https://formspree.io/f/xykdyzrd" method="POST">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required />
-
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@email.com" required />
-
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" placeholder="How can I help?" required></textarea>
-
-            <button type="submit">Send Message</button>
-            <p class="contact-success" role="status" aria-live="polite">
-                Thank you for reaching out. I’ll be in touch as soon as possible.
-            </p>
-        </form>
-    </section>
-
-    <footer>
+<footer>
         <div class="footer-contact">
             <a class="footer-icon" href="https://www.linkedin.com/in/hayk-davtyan-42430b20b/" target="_blank" rel="noopener">
                 <img src="../pictures/linkedin.jpg" alt="LinkedIn" />
@@ -105,3 +125,8 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
