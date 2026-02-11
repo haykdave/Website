@@ -866,19 +866,13 @@ footer {
     justify-content: center;
 }
 
-.footer-icon .material-symbols-outlined {
-    font-size: 30px;
+.footer-icon i {
+    font-size: 1.65rem;
     line-height: 1;
-    font-variation-settings:
-        "FILL" 0,
-        "wght" 500,
-        "GRAD" 0,
-        "opsz" 24;
-    color: currentColor;
     transition: transform 150ms ease;
 }
 
-.footer-icon:hover .material-symbols-outlined {
+.footer-icon:hover i {
     transform: translateY(-1px);
 }
 
