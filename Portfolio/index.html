@@ -13,8 +13,13 @@
 <body>
     <header>
         <nav class="site-header">
-            <div class="site-links">
-                <a href="#welcome-hero">HOME</a>,<a href="#skills">SKILLS</a>,<a href="#projects">PROJECTS</a>
+            <div class="site-nav-group">
+                <div class="site-links">
+                    <a href="#welcome-hero">HOME</a>,<a href="#skills">SKILLS</a>,<a href="#projects">PROJECTS</a>
+                </div>
+                <div class="site-cv-link">
+                    <a href="Hayk_DavtyanCV26.pdf" target="_blank" rel="noopener">CV</a>
+                </div>
             </div>
         </nav>
     </header>
@@ -33,6 +38,10 @@
             </div>
             <div class="hero-media">
                 <img src="../pictures/hayk.jpg" alt="Hayk Davtyan" class="hero-photo" />
+                <div class="hero-meta" aria-label="Personal details">
+                    <span>22 years old</span>
+                    <span>Uppsala, Sweden</span>
+                </div>
             </div>
             <p class="hero-scroll-hint">SCROLL FOR MORE</p>
         </section>
@@ -73,7 +82,17 @@
 
             <section class="project-feature-section">
                 <div class="project-feature-text">
-                    <h2>Face-Recognition Project</h2>
+                    <h2>
+                        <a
+                            class="project-heading-link"
+                            href="https://github.com/haykdave/Face-recognition-Python-project"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <span class="project-heading-default">Face-Recognition Project</span>
+                            <span class="project-heading-hover">Take me there</span>
+                        </a>
+                    </h2>
                     <span class="skill-label project-language">Python</span>
                     <p>
                         A real-time face recognition program built using OpenCV and DeepFace.
@@ -95,14 +114,24 @@
             <section class="project-feature-section current-work-feature-section">
                 <a
                     class="project-feature-card current-work-feature-card"
-                    href="../pictures/proj2.jpg"
+                    href="https://github.com/haykdave/IThemsida"
                     target="_blank"
                     rel="noopener"
                 >
                     <img src="../pictures/proj2.jpg" alt="Current project preview" />
                 </a>
                 <div class="project-feature-text current-work-feature-text">
-                    <h2>Website for My IT Program</h2>
+                    <h2>
+                        <a
+                            class="project-heading-link"
+                            href="https://github.com/haykdave/IThemsida"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <span class="project-heading-default">Website for My IT Program</span>
+                            <span class="project-heading-hover">Take me there</span>
+                        </a>
+                    </h2>
                     <div class="project-language current-work-language-list">
                         <span class="skill-label">JavaScript</span>
                         <span class="skill-label">HTML</span>

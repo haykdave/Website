@@ -168,7 +168,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: clamp(1.8rem, 4vw, 4rem);
+    gap: clamp(4.8rem, 10vw, 10.4rem);
 }
 
 .site-identity {
@@ -191,6 +191,7 @@ header {
     text-decoration: none;
     font-weight: 600;
     white-space: nowrap;
+    margin-left: clamp(3.8rem, 7.2vw, 7.2rem);
 }
 
 .site-email > span {
@@ -227,6 +228,7 @@ header {
     font-weight: 600;
     letter-spacing: 0.02em;
     white-space: nowrap;
+    margin-left: clamp(3rem, 5.8vw, 5.8rem);
 }
 
 .site-links a {
@@ -239,6 +241,29 @@ header {
 
 .site-links a:hover {
     text-decoration: none;
+}
+
+.site-nav-group {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(4.8rem, 10vw, 10.4rem);
+    min-width: 0;
+}
+
+.site-cv-link {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-left: clamp(2.2rem, 4.2vw, 4.2rem);
+}
+
+.site-cv-link a {
+    text-decoration: none;
+    color: #0b0f12;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding-inline: 0.04em;
 }
 
 .theme-toggle {
@@ -277,8 +302,12 @@ header {
 /* Marker-pen highlight for clickable text on hover/focus */
 .site-links a:hover,
 .site-links a:focus-visible,
+.site-cv-link a:hover,
+.site-cv-link a:focus-visible,
 .site-email:hover,
 .site-email:focus-visible,
+.project-heading-link:hover,
+.project-heading-link:focus-visible,
 .contact-card a:hover,
 .contact-card a:focus-visible,
 .footer-contact a:not(.footer-icon):hover,
@@ -380,6 +409,18 @@ section {
     gap: 0.7rem;
 }
 
+.hero-meta {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+    width: 100%;
+    justify-self: start;
+    text-align: left;
+    opacity: 0.86;
+}
+
 .hero-scroll-hint {
     margin: 0;
     position: absolute;
@@ -455,6 +496,37 @@ section {
 
 .project-feature-text h2 {
     margin: 0;
+}
+
+.project-heading-link {
+    display: inline-grid;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-heading-link > span {
+    grid-area: 1 / 1;
+    transition: opacity 160ms ease;
+}
+
+.project-heading-default {
+    opacity: 1;
+}
+
+.project-heading-hover {
+    opacity: 0;
+    letter-spacing: 0.03em;
+}
+
+.project-heading-link:hover .project-heading-default,
+.project-heading-link:focus-visible .project-heading-default {
+    opacity: 0;
+}
+
+.project-heading-link:hover .project-heading-hover,
+.project-heading-link:focus-visible .project-heading-hover {
+    opacity: 1;
 }
 
 .project-language {
@@ -934,6 +1006,12 @@ footer {
         flex-wrap: wrap;
     }
 
+    .site-nav-group {
+        width: 100%;
+        gap: 0.9rem;
+        flex-wrap: wrap;
+    }
+
     .site-identity {
         width: 100%;
         gap: 0.85rem;
@@ -979,6 +1057,10 @@ footer {
     .hero-media {
         justify-self: center;
         justify-items: center;
+    }
+
+    .hero-meta {
+        text-align: left;
     }
 
     .next-page-panel {
@@ -1199,6 +1281,10 @@ body.theme-dark .theme-toggle {
     color: #e7edf3;
 }
 
+body.theme-dark .site-cv-link a {
+    color: #e7edf3;
+}
+
 body.theme-dark .theme-toggle {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(231, 237, 243, 0.2);
@@ -1290,8 +1376,12 @@ body.theme-dark .site-email-hover {
 
 body.theme-dark .site-links a:hover,
 body.theme-dark .site-links a:focus-visible,
+body.theme-dark .site-cv-link a:hover,
+body.theme-dark .site-cv-link a:focus-visible,
 body.theme-dark .site-email:hover,
 body.theme-dark .site-email:focus-visible,
+body.theme-dark .project-heading-link:hover,
+body.theme-dark .project-heading-link:focus-visible,
 body.theme-dark .contact-card a:hover,
 body.theme-dark .contact-card a:focus-visible,
 body.theme-dark .footer-contact a:not(.footer-icon):hover,
