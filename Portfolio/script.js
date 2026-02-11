@@ -1,4 +1,219 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const syncHeaderOffset = () => {
+        const header = document.querySelector("header");
+        if (!header) {
+            return;
+        }
+        document.documentElement.style.setProperty(
+            "--header-offset",
+            `${Math.ceil(header.getBoundingClientRect().height)}px`
+        );
+    };
+
+    const initHeroScrollEffect = () => {
+        const stage = document.getElementById("page-transition-stage");
+        const hero = document.getElementById("welcome-hero");
+        const nextPagePanel = document.getElementById("next-page-panel");
+        const technicalSection = nextPagePanel
+            ? nextPagePanel.querySelector(".technical-section")
+            : document.querySelector(".technical-section");
+        const technicalSkillItems = technicalSection
+            ? Array.from(technicalSection.querySelectorAll(".skill-item"))
+            : [];
+        const technicalTitle = technicalSection
+            ? technicalSection.querySelector("h2")
+            : null;
+        const technicalTitleFullText = technicalTitle
+            ? technicalTitle.textContent.trim()
+            : "";
+        if (!stage || !hero || !nextPagePanel) {
+            return;
+        }
+
+        if (technicalTitle) {
+            technicalTitle.textContent = "";
+        }
+
+        let ticking = false;
+
+        const updateHeroEffect = () => {
+            const rect = stage.getBoundingClientRect();
+            const scrollRange = Math.max(rect.height - window.innerHeight, 1);
+            const progress = Math.min(Math.max(-rect.top / scrollRange, 0), 1);
+            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+            const collapseProgress = clamp((progress - 0.22) / 0.28, 0, 1);
+            const hardCutProgress = collapseProgress * collapseProgress * collapseProgress;
+            const overwriteProgress = clamp((progress - 0.01) / 0.18, 0, 1);
+            const overwriteEase = 1 - Math.pow(1 - overwriteProgress, 3);
+
+            const translateY = progress * window.innerHeight * 0.62;
+            const scale = 1 - progress * 0.42;
+            const opacity = Math.max(1 - progress * 1.65, 0);
+            const blur = progress * 0.9;
+            const cut = hardCutProgress * 100;
+            const edgeOpacity = clamp((progress - 0.18) / 0.12, 0, 1);
+
+            hero.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            hero.style.opacity = String(opacity);
+            hero.style.filter = `blur(${blur}px)`;
+            hero.style.setProperty("--hero-cut", `${cut}%`);
+            hero.style.setProperty("--hero-edge-opacity", String(edgeOpacity));
+            hero.style.pointerEvents = opacity <= 0.02 ? "none" : "";
+
+            const nextCut = (1 - overwriteEase) * 100;
+            const nextTranslateY = (1 - overwriteEase) * 60;
+            const nextOpacity = clamp((progress - 0.01) / 0.065, 0, 1);
+            nextPagePanel.style.setProperty("--next-cut", `${nextCut}%`);
+            nextPagePanel.style.transform = `translateY(${nextTranslateY}px)`;
+            nextPagePanel.style.opacity = String(nextOpacity);
+            nextPagePanel.style.pointerEvents = overwriteProgress > 0.9 ? "auto" : "none";
+
+            if (technicalSection) {
+                const revealProgress = overwriteEase;
+                const technicalTranslateY = (1 - revealProgress) * 36;
+                technicalSection.style.opacity = String(clamp(revealProgress * 1.15, 0, 1));
+                technicalSection.style.transform = `translateY(${technicalTranslateY}px)`;
+
+                if (technicalTitle && technicalTitleFullText) {
+                    const panelRect = nextPagePanel.getBoundingClientRect();
+                    const visibleFromBottom = window.innerHeight - panelRect.top;
+                    const typingProgress = clamp(
+                        visibleFromBottom / (window.innerHeight * 0.72),
+                        0,
+                        1
+                    );
+                    const charsToShow = Math.round(
+                        typingProgress * technicalTitleFullText.length
+                    );
+                    technicalTitle.textContent = technicalTitleFullText.slice(0, charsToShow);
+
+                    if (technicalSkillItems.length > 0) {
+                        technicalSkillItems.forEach((item, index) => {
+                            const staggerDelay = index * 0.14;
+                            const itemProgress = clamp(
+                                (typingProgress - staggerDelay) / 0.48,
+                                0,
+                                1
+                            );
+                            const easedProgress = 1 - Math.pow(1 - itemProgress, 2.4);
+                            const translateY = (1 - easedProgress) * 40;
+                            const translateX = (1 - easedProgress) * 8;
+                            item.style.opacity = String(easedProgress);
+                            item.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+                        });
+                    }
+                }
+            }
+            ticking = false;
+        };
+
+        const requestTick = () => {
+            if (ticking) {
+                return;
+            }
+            ticking = true;
+            window.requestAnimationFrame(updateHeroEffect);
+        };
+
+        window.addEventListener("scroll", requestTick, { passive: true });
+        window.addEventListener("resize", requestTick);
+        requestTick();
+    };
+
+    const createSiteIdentity = () => {
+        const host = document.querySelector(".site-header");
+        if (!host || host.querySelector(".site-identity")) {
+            return;
+        }
+
+        const identity = document.createElement("div");
+        identity.className = "site-identity";
+
+        const name = document.createElement("span");
+        name.className = "site-name";
+        name.textContent = "HAYK DAVTYAN";
+
+        const email = document.createElement("a");
+        email.className = "site-email";
+        email.href = "mailto:hayk.davtyan@hotmail.com";
+        email.setAttribute("aria-label", "hayk.davtyan@hotmail.com, AVAIBLE FOR WORK");
+
+        const emailDefault = document.createElement("span");
+        emailDefault.className = "site-email-default";
+        emailDefault.textContent = "HAYK.DAVTYAN@HOTMAIL.COM";
+
+        const emailHover = document.createElement("span");
+        emailHover.className = "site-email-hover";
+        emailHover.textContent = "AVAIBLE FOR WORK";
+
+        email.appendChild(emailDefault);
+        email.appendChild(emailHover);
+
+        identity.appendChild(name);
+        identity.appendChild(email);
+        host.prepend(identity);
+    };
+
+    createSiteIdentity();
+    syncHeaderOffset();
+    window.addEventListener("resize", syncHeaderOffset);
+
+    const applyTheme = (theme) => {
+        const isDark = theme === "dark";
+        document.documentElement.classList.toggle("theme-dark", isDark);
+        document.documentElement.classList.toggle("theme-light", !isDark);
+        document.body.classList.toggle("theme-dark", isDark);
+        document.body.classList.toggle("theme-light", !isDark);
+    };
+
+    const getStoredTheme = () => localStorage.getItem("theme-preference");
+    const storedTheme = getStoredTheme();
+    applyTheme(storedTheme === "dark" ? "dark" : "light");
+
+    const createThemeToggle = () => {
+        const host = document.querySelector(".site-header") || document.querySelector("header");
+        if (!host) {
+            return null;
+        }
+
+        const existingButton = host.querySelector(".theme-toggle");
+        if (existingButton) {
+            return existingButton;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "theme-toggle";
+        button.setAttribute("aria-live", "polite");
+        host.appendChild(button);
+        return button;
+    };
+
+    const themeToggle = createThemeToggle();
+    const syncThemeToggleLabel = () => {
+        if (!themeToggle) {
+            return;
+        }
+        const isDark = document.body.classList.contains("theme-dark");
+        const nextLabel = isDark ? "Light mode" : "Dark mode";
+        const icon = isDark ? "☀️" : "🌙";
+        themeToggle.innerHTML =
+            `<span class="theme-toggle-icon" aria-hidden="true">${icon}</span><span>${nextLabel}</span>`;
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+        themeToggle.setAttribute("aria-label", nextLabel);
+    };
+
+    if (themeToggle) {
+        syncThemeToggleLabel();
+        themeToggle.addEventListener("click", () => {
+            const isDark = document.body.classList.contains("theme-dark");
+            const nextTheme = isDark ? "light" : "dark";
+            applyTheme(nextTheme);
+            localStorage.setItem("theme-preference", nextTheme);
+            syncThemeToggleLabel();
+        });
+    }
+
     const loader = document.getElementById("loader");
     const hasSeenLoader = sessionStorage.getItem("seenLoader") === "true";
     if (!loader || hasSeenLoader) {
@@ -86,127 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    initHeroScrollEffect();
+
     // header now scrolls naturally; no sticky/auto-hide behavior
-
-    const aboutTrigger = document.querySelector(".easter-egg-trigger");
-    let confettiRunning = false;
-    let aboutClickCount = 0;
-    let aboutClickTimer = null;
-
-    const launchConfetti = () => {
-        if (confettiRunning) {
-            return;
-        }
-        confettiRunning = true;
-
-        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (prefersReducedMotion) {
-            window.location.href = "easter-egg.html";
-            return;
-        }
-
-        const container = document.createElement("div");
-        container.className = "confetti-container";
-
-        const colors = ["#00c4cc", "#78ffa8", "#ffb347", "#ff6b6b", "#5aa9ff"];
-        const totalPieces = 320;
-        const upwardPieces = 160;
-
-        for (let i = 0; i < totalPieces; i += 1) {
-            const piece = document.createElement("span");
-            const depth = i % 3;
-            piece.className = `confetti-piece depth-${depth + 1}`;
-            const x = Math.random() * 100;
-            const rotation = Math.floor(Math.random() * 360);
-            const delay = Math.random() * 220;
-            const size = depth === 0 ? 10 + Math.random() * 8 : depth === 1 ? 7 + Math.random() * 6 : 5 + Math.random() * 4;
-            const duration = depth === 0 ? 1500 : depth === 1 ? 1700 : 1900;
-            const drift = (Math.random() - 0.5) * (depth === 0 ? 140 : depth === 1 ? 100 : 70);
-            const scale = depth === 0 ? 1 : depth === 1 ? 0.85 : 0.7;
-
-            piece.style.left = `${x}%`;
-            piece.style.background = colors[i % colors.length];
-            piece.style.setProperty("--confetti-x", `${(Math.random() - 0.5) * 30}px`);
-            piece.style.setProperty("--confetti-drift", `${drift}px`);
-            piece.style.setProperty("--confetti-scale", scale);
-            piece.style.setProperty("--confetti-rotate", `${rotation}deg`);
-            piece.style.width = `${size}px`;
-            piece.style.height = `${size * 1.6}px`;
-            piece.style.animationDelay = `${delay}ms`;
-            piece.style.animationDuration = `${duration}ms`;
-
-            container.appendChild(piece);
-        }
-
-        for (let i = 0; i < upwardPieces; i += 1) {
-            const piece = document.createElement("span");
-            const depth = i % 3;
-            piece.className = `confetti-piece is-upward depth-${depth + 1}`;
-            const x = Math.random() * 100;
-            const rotation = Math.floor(Math.random() * 360);
-            const delay = Math.random() * 220;
-            const size = depth === 0 ? 10 + Math.random() * 8 : depth === 1 ? 7 + Math.random() * 6 : 5 + Math.random() * 4;
-            const duration = depth === 0 ? 1500 : depth === 1 ? 1700 : 1900;
-            const drift = (Math.random() - 0.5) * (depth === 0 ? 140 : depth === 1 ? 100 : 70);
-            const scale = depth === 0 ? 1 : depth === 1 ? 0.85 : 0.7;
-
-            piece.style.left = `${x}%`;
-            piece.style.background = colors[i % colors.length];
-            piece.style.setProperty("--confetti-x", `${(Math.random() - 0.5) * 30}px`);
-            piece.style.setProperty("--confetti-drift", `${drift}px`);
-            piece.style.setProperty("--confetti-scale", scale);
-            piece.style.setProperty("--confetti-rotate", `${rotation}deg`);
-            piece.style.width = `${size}px`;
-            piece.style.height = `${size * 1.6}px`;
-            piece.style.animationDelay = `${delay}ms`;
-            piece.style.animationDuration = `${duration}ms`;
-
-            container.appendChild(piece);
-        }
-
-        document.body.appendChild(container);
-
-        setTimeout(() => {
-            document.body.classList.add("page-fade");
-        }, 900);
-
-        setTimeout(() => {
-            container.remove();
-            window.location.href = "easter-egg.html";
-        }, 1400);
-    };
-
-    const handleAboutActivation = () => {
-        if (confettiRunning) {
-            return;
-        }
-
-        aboutClickCount += 1;
-        if (aboutClickCount === 1) {
-            if (aboutClickTimer) {
-                clearTimeout(aboutClickTimer);
-            }
-            aboutClickTimer = setTimeout(() => {
-                aboutClickCount = 0;
-            }, 700);
-            return;
-        }
-
-        if (aboutClickTimer) {
-            clearTimeout(aboutClickTimer);
-            aboutClickTimer = null;
-        }
-        aboutClickCount = 0;
-        launchConfetti();
-    };
-
-    if (aboutTrigger) {
-        aboutTrigger.addEventListener("click", handleAboutActivation);
-        aboutTrigger.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                handleAboutActivation();
-            }
-        });
-    }
 });
