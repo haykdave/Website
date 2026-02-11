@@ -17,10 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        let ticking = false;
         const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+        let renderedProgress = 0;
+        let targetProgress = 0;
+        let rafId = 0;
+        let previousTime = 0;
 
-        const updateHeroEffect = () => {
+        const computeTargetProgress = () => {
             const rect = stage.getBoundingClientRect();
             const headerOffset =
                 parseFloat(
@@ -31,13 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const scrollRange = Math.max(window.innerHeight * 0.95, 1);
             const scrolledIntoStage = headerOffset - rect.top;
             const rawProgress = clamp(scrolledIntoStage / scrollRange, 0, 1);
-            const progress = 1 - Math.pow(1 - rawProgress, 1.12);
+            return 1 - Math.pow(1 - rawProgress, 1.12);
+        };
+
+        const paintHero = (progress) => {
             const collapseProgress = clamp((progress - 0.18) / 0.3, 0, 1);
             const hardCutProgress = collapseProgress * collapseProgress * collapseProgress;
 
-            const translateY = progress * window.innerHeight * 0.58;
-            const scale = 1 - progress * 0.36;
-            const opacity = Math.max(1 - progress * 1.42, 0);
+            const translateY = progress * window.innerHeight * 0.5;
+            const scale = 1 - progress * 0.32;
+            const opacity = Math.max(1 - progress * 1.32, 0);
             const blur = progress * 0.7;
             const cut = hardCutProgress * 100;
             const edgeOpacity = clamp(progress / 0.22, 0, 1);
@@ -48,20 +54,59 @@ document.addEventListener("DOMContentLoaded", () => {
             hero.style.setProperty("--hero-cut", `${cut}%`);
             hero.style.setProperty("--hero-edge-opacity", String(edgeOpacity));
             hero.style.pointerEvents = opacity <= 0.04 ? "none" : "";
+        };
 
-            ticking = false;
+        const animateHero = (time) => {
+            if (previousTime === 0) {
+                previousTime = time;
+            }
+
+            const deltaSeconds = Math.max((time - previousTime) / 1000, 0);
+            previousTime = time;
+
+            // Faster response while scrolling up so hero reappears earlier.
+            const isRevealing = targetProgress < renderedProgress;
+            const damping = isRevealing ? 24 : 14;
+            const followFactor = 1 - Math.exp(-damping * deltaSeconds);
+            renderedProgress += (targetProgress - renderedProgress) * followFactor;
+
+            if (Math.abs(targetProgress - renderedProgress) < 0.0008) {
+                renderedProgress = targetProgress;
+            }
+
+            paintHero(renderedProgress);
+
+            if (renderedProgress !== targetProgress) {
+                rafId = window.requestAnimationFrame(animateHero);
+                return;
+            }
+
+            rafId = 0;
+            previousTime = 0;
         };
 
         const requestTick = () => {
-            if (ticking) {
+            targetProgress = computeTargetProgress();
+            if (rafId !== 0) {
                 return;
             }
-            ticking = true;
-            window.requestAnimationFrame(updateHeroEffect);
+            rafId = window.requestAnimationFrame(animateHero);
+        };
+
+        const syncHeroImmediately = () => {
+            if (rafId !== 0) {
+                window.cancelAnimationFrame(rafId);
+                rafId = 0;
+            }
+            previousTime = 0;
+            targetProgress = computeTargetProgress();
+            renderedProgress = targetProgress;
+            paintHero(renderedProgress);
         };
 
         window.addEventListener("scroll", requestTick, { passive: true });
         window.addEventListener("resize", requestTick);
+        window.addEventListener("hero:sync-immediate", syncHeroImmediately);
         requestTick();
     };
 
@@ -81,43 +126,44 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        technicalTitle.textContent = "";
+        let lastChars = -1;
+        let ticking = false;
 
-        let hasStarted = false;
-        const typeTitle = () => {
-            if (hasStarted) {
-                return;
+        const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+        const updateTitleByScroll = () => {
+            const rect = technicalSection.getBoundingClientRect();
+            const viewportHeight = window.innerHeight || 1;
+            const scrollTop = window.scrollY || window.pageYOffset || 0;
+            const doc = document.documentElement;
+            const scrollBottom = scrollTop + viewportHeight;
+            const isAtPageBottom = scrollBottom >= doc.scrollHeight - 2;
+
+            const start = viewportHeight * 0.88;
+            const end = viewportHeight * 0.2;
+            const total = Math.max(start - end, 1);
+            const scrollProgress = clamp((start - rect.top) / total, 0, 1);
+            const progress = isAtPageBottom ? 1 : scrollProgress;
+            const charsToShow = Math.round(progress * fullText.length);
+
+            if (charsToShow !== lastChars) {
+                technicalTitle.textContent = fullText.slice(0, charsToShow);
+                lastChars = charsToShow;
             }
-            hasStarted = true;
-
-            let index = 0;
-            const tickMs = 55;
-            const timer = window.setInterval(() => {
-                index += 1;
-                technicalTitle.textContent = fullText.slice(0, index);
-                if (index >= fullText.length) {
-                    window.clearInterval(timer);
-                }
-            }, tickMs);
+            ticking = false;
         };
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
-                    typeTitle();
-                    observer.disconnect();
-                });
-            },
-            {
-                threshold: 0.18,
-                rootMargin: "0px 0px -12% 0px",
+        const requestTick = () => {
+            if (ticking) {
+                return;
             }
-        );
+            ticking = true;
+            window.requestAnimationFrame(updateTitleByScroll);
+        };
 
-        observer.observe(technicalSection);
+        technicalTitle.textContent = "";
+        window.addEventListener("scroll", requestTick, { passive: true });
+        window.addEventListener("resize", requestTick);
+        requestTick();
     };
 
     const createSiteIdentity = () => {
@@ -157,6 +203,17 @@ document.addEventListener("DOMContentLoaded", () => {
     createSiteIdentity();
     syncHeaderOffset();
     window.addEventListener("resize", syncHeaderOffset);
+
+    const homeLink = document.querySelector('.site-links a[href="#welcome-hero"]');
+    if (homeLink) {
+        homeLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: "auto" });
+            window.requestAnimationFrame(() => {
+                window.dispatchEvent(new Event("hero:sync-immediate"));
+            });
+        });
+    }
 
     const applyTheme = (theme) => {
         const isDark = theme === "dark";
