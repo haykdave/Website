@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (technicalTitle) {
             technicalTitle.textContent = "";
         }
-
         let ticking = false;
 
         const updateHeroEffect = () => {
@@ -104,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             }
+
             ticking = false;
         };
 
