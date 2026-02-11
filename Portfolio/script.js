@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const emailHover = document.createElement("span");
         emailHover.className = "site-email-hover";
-        emailHover.textContent = "AVAIBLE FOR WORK";
+        emailHover.textContent = "AVAILABLE FOR WORK";
 
         email.appendChild(emailDefault);
         email.appendChild(emailHover);

@@ -479,6 +479,10 @@ section {
     gap: 2rem;
 }
 
+.project-feature-section + .project-feature-section {
+    margin-top: 0.9rem;
+}
+
 .projects-section-title {
     width: min(1120px, calc(100% - 2rem));
     margin: 1.7rem auto 1rem;
