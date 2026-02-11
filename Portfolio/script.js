@@ -13,96 +13,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const initHeroScrollEffect = () => {
         const stage = document.getElementById("page-transition-stage");
         const hero = document.getElementById("welcome-hero");
-        const nextPagePanel = document.getElementById("next-page-panel");
-        const technicalSection = nextPagePanel
-            ? nextPagePanel.querySelector(".technical-section")
-            : document.querySelector(".technical-section");
-        const technicalSkillItems = technicalSection
-            ? Array.from(technicalSection.querySelectorAll(".skill-item"))
-            : [];
-        const technicalTitle = technicalSection
-            ? technicalSection.querySelector("h2")
-            : null;
-        const technicalTitleFullText = technicalTitle
-            ? technicalTitle.textContent.trim()
-            : "";
-        if (!stage || !hero || !nextPagePanel) {
+        if (!stage || !hero) {
             return;
         }
 
-        if (technicalTitle) {
-            technicalTitle.textContent = "";
-        }
         let ticking = false;
+        const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
         const updateHeroEffect = () => {
             const rect = stage.getBoundingClientRect();
-            const scrollRange = Math.max(rect.height - window.innerHeight, 1);
-            const progress = Math.min(Math.max(-rect.top / scrollRange, 0), 1);
-            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-            const collapseProgress = clamp((progress - 0.22) / 0.28, 0, 1);
+            const headerOffset =
+                parseFloat(
+                    getComputedStyle(document.documentElement).getPropertyValue(
+                        "--header-offset"
+                    )
+                ) || 0;
+            const scrollRange = Math.max(window.innerHeight * 0.95, 1);
+            const scrolledIntoStage = headerOffset - rect.top;
+            const rawProgress = clamp(scrolledIntoStage / scrollRange, 0, 1);
+            const progress = 1 - Math.pow(1 - rawProgress, 1.12);
+            const collapseProgress = clamp((progress - 0.18) / 0.3, 0, 1);
             const hardCutProgress = collapseProgress * collapseProgress * collapseProgress;
-            const overwriteProgress = clamp((progress - 0.01) / 0.18, 0, 1);
-            const overwriteEase = 1 - Math.pow(1 - overwriteProgress, 3);
 
-            const translateY = progress * window.innerHeight * 0.62;
-            const scale = 1 - progress * 0.42;
-            const opacity = Math.max(1 - progress * 1.65, 0);
-            const blur = progress * 0.9;
+            const translateY = progress * window.innerHeight * 0.58;
+            const scale = 1 - progress * 0.36;
+            const opacity = Math.max(1 - progress * 1.42, 0);
+            const blur = progress * 0.7;
             const cut = hardCutProgress * 100;
-            const edgeOpacity = clamp((progress - 0.18) / 0.12, 0, 1);
+            const edgeOpacity = clamp(progress / 0.22, 0, 1);
 
             hero.style.transform = `translateY(${translateY}px) scale(${scale})`;
             hero.style.opacity = String(opacity);
             hero.style.filter = `blur(${blur}px)`;
             hero.style.setProperty("--hero-cut", `${cut}%`);
             hero.style.setProperty("--hero-edge-opacity", String(edgeOpacity));
-            hero.style.pointerEvents = opacity <= 0.02 ? "none" : "";
-
-            const nextCut = (1 - overwriteEase) * 100;
-            const nextTranslateY = (1 - overwriteEase) * 60;
-            const nextOpacity = clamp((progress - 0.01) / 0.065, 0, 1);
-            nextPagePanel.style.setProperty("--next-cut", `${nextCut}%`);
-            nextPagePanel.style.transform = `translateY(${nextTranslateY}px)`;
-            nextPagePanel.style.opacity = String(nextOpacity);
-            nextPagePanel.style.pointerEvents = overwriteProgress > 0.9 ? "auto" : "none";
-
-            if (technicalSection) {
-                const revealProgress = overwriteEase;
-                const technicalTranslateY = (1 - revealProgress) * 36;
-                technicalSection.style.opacity = String(clamp(revealProgress * 1.15, 0, 1));
-                technicalSection.style.transform = `translateY(${technicalTranslateY}px)`;
-
-                if (technicalTitle && technicalTitleFullText) {
-                    const panelRect = nextPagePanel.getBoundingClientRect();
-                    const visibleFromBottom = window.innerHeight - panelRect.top;
-                    const typingProgress = clamp(
-                        visibleFromBottom / (window.innerHeight * 0.72),
-                        0,
-                        1
-                    );
-                    const charsToShow = Math.round(
-                        typingProgress * technicalTitleFullText.length
-                    );
-                    technicalTitle.textContent = technicalTitleFullText.slice(0, charsToShow);
-
-                    if (technicalSkillItems.length > 0) {
-                        technicalSkillItems.forEach((item, index) => {
-                            const staggerDelay = index * 0.14;
-                            const itemProgress = clamp(
-                                (typingProgress - staggerDelay) / 0.48,
-                                0,
-                                1
-                            );
-                            const easedProgress = 1 - Math.pow(1 - itemProgress, 2.4);
-                            const translateY = (1 - easedProgress) * 40;
-                            const translateX = (1 - easedProgress) * 8;
-                            item.style.opacity = String(easedProgress);
-                            item.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
-                        });
-                    }
-                }
-            }
+            hero.style.pointerEvents = opacity <= 0.04 ? "none" : "";
 
             ticking = false;
         };
@@ -118,6 +63,61 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("scroll", requestTick, { passive: true });
         window.addEventListener("resize", requestTick);
         requestTick();
+    };
+
+    const initTechnicalTitleTyping = () => {
+        const technicalSection = document.querySelector(".technical-section");
+        if (!technicalSection) {
+            return;
+        }
+
+        const technicalTitle = technicalSection.querySelector("h2");
+        if (!technicalTitle) {
+            return;
+        }
+
+        const fullText = technicalTitle.textContent.trim();
+        if (!fullText) {
+            return;
+        }
+
+        technicalTitle.textContent = "";
+
+        let hasStarted = false;
+        const typeTitle = () => {
+            if (hasStarted) {
+                return;
+            }
+            hasStarted = true;
+
+            let index = 0;
+            const tickMs = 55;
+            const timer = window.setInterval(() => {
+                index += 1;
+                technicalTitle.textContent = fullText.slice(0, index);
+                if (index >= fullText.length) {
+                    window.clearInterval(timer);
+                }
+            }, tickMs);
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    typeTitle();
+                    observer.disconnect();
+                });
+            },
+            {
+                threshold: 0.18,
+                rootMargin: "0px 0px -12% 0px",
+            }
+        );
+
+        observer.observe(technicalSection);
     };
 
     const createSiteIdentity = () => {
@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initHeroScrollEffect();
+    initTechnicalTitleTyping();
 
     // header now scrolls naturally; no sticky/auto-hide behavior
 });

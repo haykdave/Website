@@ -14,6 +14,15 @@ body {
         linear-gradient(135deg, #f7fbff 0%, #edf5ff 45%, #e6f7f2 100%);
     color: #0b0f12;
     padding-top: var(--header-offset, 3rem);
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+html::-webkit-scrollbar {
+    display: none;
 }
 
 /* Loader (fullscreen) */
@@ -384,18 +393,18 @@ section {
 
 .page-transition-stage {
     position: relative;
-    height: 235vh;
+    min-height: auto;
 }
 
 .page-transition-stage .hero-section {
-    position: sticky;
-    top: 0.05rem;
+    position: relative;
+    top: auto;
     z-index: 2;
 }
 
 .next-page-panel {
-    position: sticky;
-    top: 5rem;
+    position: relative;
+    top: auto;
     z-index: 3;
     width: min(1280px, calc(100% - 2rem));
     margin: 0 auto;
@@ -404,16 +413,16 @@ section {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-    min-height: calc(100vh - 6.5rem);
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    --next-cut: 100%;
-    clip-path: inset(var(--next-cut) 0 0 0 round 16px);
-    opacity: 0;
-    transform: translateY(90px);
-    will-change: transform, opacity, clip-path;
-    pointer-events: none;
+    --next-cut: 0%;
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+    pointer-events: auto;
 }
 
 .project-feature-section {
@@ -746,8 +755,8 @@ h2 {
 }
 
 .technical-section .skill-item {
-    opacity: 0;
-    transform: translate3d(8px, 40px, 0);
+    opacity: 1;
+    transform: none;
     transition: opacity 380ms ease, transform 420ms ease;
 }
 
@@ -892,7 +901,7 @@ footer {
     }
 
     .page-transition-stage {
-        height: 190vh;
+        min-height: auto;
     }
 
     .hero-photo {
@@ -907,7 +916,7 @@ footer {
 
     .next-page-panel {
         padding: 1.4rem;
-        min-height: calc(100vh - 5.8rem);
+        min-height: auto;
     }
 
     .project-feature-section {
