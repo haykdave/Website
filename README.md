@@ -34,7 +34,6 @@ Then open `http://localhost:8000`.
 - Sticky/fixed header with adaptive behavior
 - Dark/light theme toggle
 - Project showcase with external links
-- Contact form integration (Formspree)
 - Direct email link via `mailto:`
 
 ## macOS Mailto Note
