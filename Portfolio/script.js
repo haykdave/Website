@@ -217,6 +217,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+    mailLinks.forEach((mailLink) => {
+        mailLink.addEventListener("click", (event) => {
+            const href = mailLink.getAttribute("href");
+            if (!href) {
+                return;
+            }
+            event.preventDefault();
+            window.location.href = href;
+        });
+    });
+
     const applyTheme = (theme) => {
         const isDark = theme === "dark";
         document.documentElement.classList.toggle("theme-dark", isDark);
