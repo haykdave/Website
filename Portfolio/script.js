@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const MOBILE_BREAKPOINT = 768;
+
     const syncHeaderOffset = () => {
         const header = document.querySelector("header");
         if (!header) {
@@ -204,8 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
     syncHeaderOffset();
     window.addEventListener("resize", syncHeaderOffset);
 
-    const homeLink = document.querySelector('.site-links a[href="#welcome-hero"]');
-    if (homeLink) {
+    const homeLinks = document.querySelectorAll('.site-links a[href="#welcome-hero"]');
+    homeLinks.forEach((homeLink) => {
         homeLink.addEventListener("click", (event) => {
             event.preventDefault();
             window.scrollTo({ top: 0, behavior: "auto" });
@@ -213,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.dispatchEvent(new Event("hero:sync-immediate"));
             });
         });
-    }
+    });
 
     const applyTheme = (theme) => {
         const isDark = theme === "dark";
@@ -225,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const getStoredTheme = () => localStorage.getItem("theme-preference");
     const storedTheme = getStoredTheme();
-    applyTheme(storedTheme === "dark" ? "dark" : "light");
+    applyTheme(storedTheme === "light" ? "light" : "dark");
 
     const createThemeToggle = () => {
         const host = document.querySelector(".site-header") || document.querySelector("header");
@@ -247,6 +249,95 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const themeToggle = createThemeToggle();
+
+    const createMobileMenuToggle = () => {
+        const host = document.querySelector(".site-header");
+        if (!host) {
+            return null;
+        }
+
+        const existingButton = host.querySelector(".site-mobile-menu-toggle");
+        if (existingButton) {
+            return existingButton;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "site-mobile-menu-toggle";
+        button.textContent = "MENU";
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-label", "Toggle header menu");
+        host.prepend(button);
+        return button;
+    };
+
+    const mobileMenuToggle = createMobileMenuToggle();
+    const siteHeader = document.querySelector(".site-header");
+
+    const setMobileMenuOpen = (isOpen) => {
+        if (!siteHeader || !mobileMenuToggle) {
+            return;
+        }
+        siteHeader.classList.toggle("is-mobile-menu-open", isOpen);
+        mobileMenuToggle.setAttribute("aria-expanded", String(isOpen));
+        syncHeaderOffset();
+    };
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener("click", () => {
+            if (!siteHeader) {
+                return;
+            }
+            const isOpen = siteHeader.classList.contains("is-mobile-menu-open");
+            setMobileMenuOpen(!isOpen);
+        });
+    }
+
+    if (siteHeader) {
+        siteHeader.addEventListener("click", (event) => {
+            if (window.innerWidth > MOBILE_BREAKPOINT) {
+                return;
+            }
+            if (!(event.target instanceof Element)) {
+                return;
+            }
+            const clickedAction = event.target.closest("a, .theme-toggle");
+            if (!clickedAction) {
+                return;
+            }
+            setMobileMenuOpen(false);
+        });
+    }
+
+    document.addEventListener("click", (event) => {
+        if (window.innerWidth > MOBILE_BREAKPOINT || !siteHeader) {
+            return;
+        }
+        const isOpen = siteHeader.classList.contains("is-mobile-menu-open");
+        if (!isOpen || siteHeader.contains(event.target)) {
+            return;
+        }
+        setMobileMenuOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || !siteHeader) {
+            return;
+        }
+        if (!siteHeader.classList.contains("is-mobile-menu-open")) {
+            return;
+        }
+        setMobileMenuOpen(false);
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > MOBILE_BREAKPOINT) {
+            setMobileMenuOpen(false);
+        } else {
+            syncHeaderOffset();
+        }
+    });
+
     const syncThemeToggleLabel = () => {
         if (!themeToggle) {
             return;
