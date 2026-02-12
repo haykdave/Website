@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hayk Davtyan | Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+</head>
+<body>
+    <header>
+        <nav class="site-header">
+            <div class="site-nav-group">
+                <div class="site-links">
+                    <a href="#welcome-hero">HOME</a>  <a href="#skills">SKILLS</a>  <a href="#projects">PROJECTS</a>
+                </div>
+                <div class="site-cv-link">
+                    <a href="Hayk_DavtyanCV26.pdf" target="_blank" rel="noopener">CV</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-transition-stage" id="page-transition-stage">
+        <section class="hero-section" id="welcome-hero">
+            <div class="hero-content">
+                <h2>WELCOME TO MY PORTFOLIO</h2>
+                <p class="hero-intro">
+                    My name is Hayk Davtyan and I am a 2nd year MSc Engineering student in Information Technology 
+                    at Uppsala University. I have experience in programming, data structures, 
+                    and software development, and I love exploring new technologies. 
+                    Outside of studies, I enjoy staying active through workouts 
+                    and mountain climbing.
+                </p>
+            </div>
+            <div class="hero-media">
+                <img src="../pictures/hayk.jpg" alt="Hayk Davtyan" class="hero-photo" />
+                <div class="hero-meta" aria-label="Personal details">
+                    <span>22 years old</span>
+                    <span>Uppsala, Sweden</span>
+                </div>
+            </div>
+            <p class="hero-scroll-hint">SCROLL FOR MORE</p>
+        </section>
+
+        <div class="next-page-panel" id="next-page-panel">
+            <section class="technical-section" id="skills">
+                <h2>Technical Competence</h2>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <span class="skill-label">Programming</span>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">C/C++</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-label">Web</span>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">CSS</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-label">Tools</span>
+                        <div class="skill-tags">
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Logisim</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <h2 class="projects-section-title" id="projects">My projects</h2>
+
+            <section class="project-feature-section">
+                <div class="project-feature-text">
+                    <h2>
+                        <a
+                            class="project-heading-link"
+                            href="https://github.com/haykdave/Face-recognition-Python-project"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <span class="project-heading-default">Face-Recognition Project</span>
+                            <span class="project-heading-hover">Take me there</span>
+                        </a>
+                    </h2>
+                    <span class="skill-label project-language">Python</span>
+                    <p>
+                        A real-time face recognition program built using OpenCV and DeepFace.
+                        It captures video from the webcam and compares detected faces with a reference image.
+                    </p>
+                </div>
+                <a
+                    class="project-feature-card"
+                    href="https://github.com/haykdave/Face-recognition-Python-project"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <img src="../pictures/face.jpg" alt="Face-Recognition Project preview" />
+                </a>
+            </section>
+
+            <section class="project-feature-section">
+                <div class="project-feature-text">
+                    <h2>
+                        <a
+                            class="project-heading-link"
+                            href="https://github.com/haykdave/Custom-reference-counted-memory-manager-"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <span class="project-heading-default">Automatic Memory Management in C</span>
+                            <span class="project-heading-hover">Take me there</span>
+                        </a>
+                    </h2>
+                    <span class="skill-label project-language">C</span>
+                    <p>
+                        A system that automatically frees memory when a program no longer uses it.
+It keeps track of how many parts of the program are using each object and safely deletes objects when they are no longer needed, helping prevent memory leaks in C programs.
+                    </p>
+                </div>
+                <a
+                    class="project-feature-card"
+                    href="https://github.com/haykdave/Custom-reference-counted-memory-manager-"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <img src="../pictures/gc.jpg" alt="GC Project preview" />
+                </a>
+            </section>
+
+            <p class="current-work-kicker">Currently working on</p>
+
+            <section class="project-feature-section current-work-feature-section">
+                <a
+                    class="project-feature-card current-work-feature-card"
+                    href="https://github.com/haykdave/IThemsida"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <img src="../pictures/proj2.jpg" alt="Current project preview" />
+                </a>
+                <div class="project-feature-text current-work-feature-text">
+                    <h2>
+                        <a
+                            class="project-heading-link"
+                            href="https://github.com/haykdave/IThemsida"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <span class="project-heading-default">Website for My IT Program</span>
+                            <span class="project-heading-hover">Take me there</span>
+                        </a>
+                    </h2>
+                    <div class="project-language current-work-language-list">
+                        <span class="skill-label">JavaScript</span>
+                        <span class="skill-label">HTML</span>
+                        <span class="skill-label">CSS</span>
+                    </div>
+                    <p>
+                        My friend and I are building a website for our IT program where we collect old exams for current and future students.
+                    </p>
+                </div>
+            </section>
+
+            <footer>
+                <div class="footer-contact">
+                    <a class="footer-icon" href="https://www.linkedin.com/in/hayk-davtyan-42430b20b/" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                        <span class="sr-only">LinkedIn</span>
+                    </a>
+                    <a class="footer-icon" href="https://github.com/haykdave" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-github" aria-hidden="true"></i>
+                        <span class="sr-only">GitHub</span>
+                    </a>
+                    <a class="footer-icon" href="mailto:hayk.davtyan@hotmail.com">
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                        <span class="sr-only">Outlook Email</span>
+                    </a>
+                    <span class="phone-text">Phone: +46 76-704 72 44</span>
+                    <a class="phone-link" href="tel:+46767047244">Phone: +46 76-704 72 44</a>
+                </div>
+                <p>© 2026 Hayk Davtyan</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
